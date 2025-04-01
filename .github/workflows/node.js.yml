@@ -49,13 +49,13 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@${{ secrets.EC2_HOST }} "mkdir -p /home/ubuntu/app/"
-          scp -o StrictHostKeyChecking=no -i private_key.pem -r .env build/ ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/app/
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@${{ secrets.EC2_HOST }} "mkdir -p /home/ubuntu/actions-runner-api/"
+          scp -o StrictHostKeyChecking=no -i private_key.pem -r .env build/ ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/actions-runner-api/
 
       - name: Restart Application
         run: |
           ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
-            cd /home/ubuntu/app/
-            npm install --production
+            cd /home/ubuntu/actions-runner-api/
+            npm install
             pm2 restart app || pm2 start npm --name "app" -- start
           EOF
