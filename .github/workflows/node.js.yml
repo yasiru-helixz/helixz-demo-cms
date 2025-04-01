@@ -42,9 +42,6 @@ jobs:
           echo "DATABASE_FILENAME=${{ secrets.DATABASE_FILENAME }}" >> .env
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
 
-      - name: Verify EC2 Host
-        run: echo "EC2 Host: ${{ secrets.EC2_HOST }}"
-
       - name: Setup SSH Key
         run: |
           echo "${{ secrets.EC2_SSH_KEY }}" > private_key.pem
